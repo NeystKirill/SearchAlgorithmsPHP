@@ -1,1 +1,1 @@
-Movie App
+ Search Algorithms
