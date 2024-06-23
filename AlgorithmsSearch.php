@@ -10,7 +10,7 @@
  */
 
 // Define a common array and the number to find:
-$common_array = [1, 9, 0, 34, 22, 55, 7 , 99 , 100 , 9 , 9 , 5 ,3, 22];
+$common_array = [1, 9, 0, 34, 22, 55, 7 , 99 , 100 , 9 , 9 , 5 ,3, 21];
 $num_to_find = 22;
 
 // Sorting function for algorithms that require sorted arrays:
@@ -104,7 +104,45 @@ $jump_search = function(array $array, int $num_to_find): string
             return "The number to find is: index: " . $last . ", value: " . $array[$last];
         }
     }
+
     return 'Nothing matches';
 } ;
 
-echo $jump_search($sorted_array, $num_to_find);
+//echo $jump_search($sorted_array, $num_to_find);
+
+/**
+ * Interpolation search
+ * interpolation formula:
+ * position = low + (num_to_find − array[low]) * (high − low) /  array[high] - array[low]
+ * It is used to calculate the found position of the search value in an interpolation search.
+ */
+function interpolation_search (array $array, int $low , int $high , int $num_to_find): string
+{
+    $position = (int)($low
+        + (((double)($high - $low)
+                / ($array[$high] - $array[$low]))
+            * ($num_to_find - $array[$low])));
+    if ($low > $high) {
+        return 'Nothing matches';
+    }
+    if ($array[$position] == $num_to_find) {
+        return "The number to find is: index: " . $position . ", value: " . $array[$position];
+    } elseif ($array[$position] > $num_to_find) {
+        return interpolation_search($array, $low, $position - 1, $num_to_find);
+    } elseif ($array[$position] < $num_to_find) {
+        return interpolation_search($array, $position + 1, $high, $num_to_find);
+    } else {
+        return 'Nothing matches';
+    }
+
+};
+$low = 0 ;
+$high = count($sorted_array) - 1 ;
+//echo(interpolation_search($sorted_array , $low , $high , $num_to_find));
+
+/**
+ * Exponential search
+ * interpolation formula:
+ * position = low + (num_to_find − array[low]) * (high − low) /  array[high] - array[low]
+ * It is used to calculate the found position of the search value in an interpolation search.
+ */
