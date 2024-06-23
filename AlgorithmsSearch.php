@@ -10,7 +10,7 @@
  */
 
 // Define a common array and the number to find:
-$common_array = [1, 9, 0, 34, 22, 55, 7 , 99];
+$common_array = [1, 9, 0, 34, 22, 55, 7 , 99 , 100 , 9 , 9 , 5 ,3, 22];
 $num_to_find = 22;
 
 // Sorting function for algorithms that require sorted arrays:
@@ -80,30 +80,31 @@ $binary_search = function(array $array, int $num_to_find): string {
  */
 $jump_search = function(array $array, int $num_to_find): string
 {
-    $n = count($array);
-    $step = sqrt($n);
-    $prev = 0  ;
-    while ($array[min($step ,$n) - 1] < $num_to_find)
+    $count = count($array);
+    $step = intval(sqrt($count));
+    $last = 0 ;
+
+    while ($array[min($step , $count) - 1] < $num_to_find)
     {
-        $prev = $step ;
-        $step +=  sqrt($n);
-        if ($prev >= $n)
+        $last = $step ;
+        $step += intval(sqrt($count))  ;
+        if ($last >= $num_to_find)
         {
             return false;
         }
     }
-    while ($array[$prev] < $num_to_find)
+    while ($array[$last] < $num_to_find)
     {
-        $prev++ ;
-        if ($prev == min($step ,$n))
+        $last++ ;
+        if ($last >= min($step , $count))
         {
             return false;
+        } elseif ($array[$last] == $num_to_find)
+        {
+            return "The number to find is: index: " . $last . ", value: " . $array[$last];
         }
-    }
-    if ($array[$prev] == $num_to_find)
-    {
-        return "The number to find is: index: $prev, value: $array[$prev]";
     }
     return 'Nothing matches';
 } ;
+
 echo $jump_search($sorted_array, $num_to_find);
