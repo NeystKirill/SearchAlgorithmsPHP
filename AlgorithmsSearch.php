@@ -10,7 +10,7 @@
  */
 
 // Define a common array and the number to find:
-$common_array = [1, 9, 0, 34, 22, 55, 7 , 99 , 100 , 9 , 9 , 5 ,3, 21];
+$common_array = [1, 9, 0, 34, 2, 55, 7 , 99 , 100 , 9 , 9 , 5 ,3, 21];
 $num_to_find = 22;
 
 // Sorting function for algorithms that require sorted arrays:
@@ -52,10 +52,7 @@ $linear_search = function(array $array, int $num_to_find): string
  */
 $sorted_array = $sort_array($common_array) ;
 print_r($sorted_array);
-$binary_search = function(array $array, int $num_to_find): string {
-
-    $first = 0;
-    $last = count($array) - 1;
+$binary_search = function(array $array, int $first , int $last, int $num_to_find): string {
     while ($first <= $last) {
 
         $middle = intdiv($first + $last, 2);
@@ -67,14 +64,15 @@ $binary_search = function(array $array, int $num_to_find): string {
 
             $first = $middle + 1;
         } else {
-
-            return "The number to find is: value: $array[$middle]";
+            return "The number to find is: value: $array[$middle]" ;
         }
     }
 
     return 'Nothing matches';
 };
-//echo $binary_search($sorted_array, $num_to_find);
+$first = 0;
+$last = count($sorted_array) - 1;
+echo $binary_search($sorted_array,$first , $last, $num_to_find);
 /**
  * Jump search
  */
@@ -146,3 +144,20 @@ $high = count($sorted_array) - 1 ;
  * position = low + (num_to_find − array[low]) * (high − low) /  array[high] - array[low]
  * It is used to calculate the found position of the search value in an interpolation search.
  */
+
+$exponential_search = function(array $array, $binary_search, int $num_to_find): string
+{
+    if ($array[0] == $num_to_find)
+    {
+        return "The number to find is: index: 0 , value:  $array[0] one";
+    }
+    $i = 1 ;
+    while ($i < (count($array) - 1)  && $array[$i] <= $num_to_find)
+    {
+        $i *= 2 ;
+    }
+    return $binary_search($array, $i / 2,
+        min($i, count($array) - 1), $num_to_find);
+} ;
+
+echo ($exponential_search($sorted_array , $binary_search , $num_to_find)) ;
