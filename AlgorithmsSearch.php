@@ -14,8 +14,8 @@
  */
 
 // Define a common array and the number to find:
-$common_array = [1, 9, 0, 34, 2, 55, 2, 99, 100, 9, 9, 5, 3, 22];
-$num_to_find = 22;
+$common_array = [1, 9, 0, 34, 2, 5, 2, 99, 100, 9, 9, 5, 39, 20, 22];
+$num_to_find = 20;
 
 // Sorting function for algorithms that require sorted arrays:
 $sort_array = function (array $array): array {
@@ -51,7 +51,6 @@ $linear_search = function(array $array, int $num_to_find): string {
     }
     return 'Nothing matches';
 };
-
 echo "Linear search: " . $linear_search($common_array, $num_to_find) ."\n";
 
 
@@ -103,18 +102,21 @@ $jump_search = function(array $array, int $num_to_find): string {
         $last = $step;
         $step += intval(sqrt($count));
         if ($last >= $count) {
-            return 'ChNothing matches';
+            return 'Nothing matches';
         }
     }
 
-    while ($array[$last] <= $num_to_find) {
+    while ($array[$last] < $num_to_find) {
         $last++;
-        if ($last >= min($step, $count)) {
+        if ($last > min($step, $count)) {
             return ' Nothing matches';
-        } elseif ($array[$last] === $num_to_find) {
-            return "The number to find is: index: $last, value: $array[$last]";
         }
     }
+    if ($array[$last] === $num_to_find)
+    {
+        return "The number to find is: index: $last, value: $array[$last]";
+    }
+
 
     return ' Nothing matches';
 };
