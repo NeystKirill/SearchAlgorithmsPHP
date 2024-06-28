@@ -10,7 +10,7 @@
  */
 
 // Common unsorted array
-$unsorted_array = [3, 4, 1, 0, 0, 4, 3, 2, 99];
+$unsorted_array = [3, 4, 1, 0, 0, 4, 3, 2, 99 , 0 ,999999 ,957 , 433 ,7 , 4, 1 ,2221 ,1203359 ];
 
 /**
  * Optimized Bubble Sort function
@@ -69,3 +69,73 @@ function selection_sort(array $array): array
     return $array;
 };
 //print_r(selection_sort($unsorted_array));
+
+/**
+ * Tree sort
+ *
+ * @param array $array The array to be sorted
+ * @return array The sorted array
+ */
+
+class Tree_node {
+    public $key ;
+    public $left ;
+    public $right ;
+    function __construct($key)
+    {
+        $this->key = $key ;
+        $this->left = null ;
+        $this->right = null ;
+    }
+
+public function insert(Tree_node $node): void
+{
+    if ($node->key < $this->key)
+    {
+        if ($this->left !== null)
+        {
+            $this->left->insert($node);
+        } else
+        {
+            $this->left = $node ;
+        }
+    } else
+    {
+        if ($this->right !== null)
+        {
+            $this->right->insert($node);
+        } else
+        {
+            $this->right = $node ;
+        }
+    }
+}
+public function traverse(callable $visitor): void
+{
+    $this->left?->traverse($visitor);
+    $visitor($this) ;
+    $this->right?->traverse($visitor);
+}
+}
+class Tree_sort
+{
+    public static function sort(array $array): array
+    {
+        if (empty($array)) {
+            return [];
+        }
+
+        $root = new Tree_node($array[0]);
+        for ($i = 1; $i < count($array); $i++) {
+            $root->insert(new Tree_node($array[$i]));
+        }
+        $sorted_array = [];
+        $root->traverse(function ($node) use (&$sorted_array) {
+            $sorted_array[] = $node->key;
+        });
+        return $sorted_array;
+    }
+}
+
+$sortedArray = Tree_sort::sort($unsorted_array);
+print_r($sortedArray);
